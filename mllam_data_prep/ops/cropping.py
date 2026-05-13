@@ -6,13 +6,13 @@ import xarray as xr
 from spherical_geometry.polygon import SphericalPolygon
 
 
-def _get_latlon_coords(da: xr.DataArray) -> tuple:
+def _get_latlon_coords(da: Union[xr.Dataset, xr.DataArray]) -> tuple:
     """
-    Get the latlon coordinates of a DataArray.
+    Get the latlon coordinates of a Dataset or DataArray.
 
     Parameters
     ----------
-    da : xarray.DataArray
+    da : xarray.Dataset or xarray.DataArray
         The data.
 
     Returns
@@ -25,7 +25,7 @@ def _get_latlon_coords(da: xr.DataArray) -> tuple:
     elif "lat" in da.coords and "lon" in da.coords:
         return (da.lon, da.lat)
     else:
-        raise Exception("Could not find lat/lon coordinates in DataArray.")
+        raise Exception("Could not find lat/lon coordinates.")
 
 
 def create_convex_hull_mask(ds: xr.Dataset, ds_reference: xr.Dataset) -> xr.DataArray:
